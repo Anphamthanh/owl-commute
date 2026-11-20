@@ -1,9 +1,9 @@
 {
   "team_line": "An Pham, M.S. Computer Science, Kennesaw State University",
   "repo_url": "https://github.com/Anphamthanh/owl-commute",
-  "leaveby_image": "leaveby-card.png",
+  "leaveby_image": "leaveby-rush-marietta.png",
   "rush_image": "rush-frame.png",
-  "rush_caption": "TBD",
+  "rush_caption": "I-75 S past Roswell Rd, 7:29 AM: \"Heavy traffic on I-75 S main lanes; Express Lanes are flowing well\" (confidence 0.9), checked by eye against the frame",
   "accuracy_line": "TBD",
-  "cost_line": "TBD"
+  "cost_line": "Model cost: about $12 per day for both campuses on the rush-hour schedule (2,730 camera reads at $0.0043 each; tokens measured on 595 reads this morning), about $40 per day if read all day"
 }

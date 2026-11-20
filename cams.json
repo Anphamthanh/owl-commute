@@ -1,0 +1,130 @@
+[
+ {
+  "id": "22594",
+  "name": "Frey Rd at Skip Spann Conn",
+  "campus": "Kennesaw",
+  "corridor": "Frey Rd",
+  "lat": 34.0366,
+  "lon": -84.5795
+ },
+ {
+  "id": "22595",
+  "name": "Frey Rd at Campus Loop Rd",
+  "campus": "Kennesaw",
+  "corridor": "Frey Rd",
+  "lat": 34.0425,
+  "lon": -84.5811
+ },
+ {
+  "id": "25475",
+  "name": "Chastain Rd at Town Point Dr",
+  "campus": "Kennesaw",
+  "corridor": "Chastain Rd",
+  "lat": 34.03211458,
+  "lon": -84.5814198
+ },
+ {
+  "id": "22508",
+  "name": "Chastain Rd at I-75",
+  "campus": "Kennesaw",
+  "corridor": "Chastain Rd",
+  "lat": 34.0331,
+  "lon": -84.5782
+ },
+ {
+  "id": "22502",
+  "name": "Chastain Rd at Busbee Dr",
+  "campus": "Kennesaw",
+  "corridor": "Chastain Rd",
+  "lat": 34.0344,
+  "lon": -84.5745
+ },
+ {
+  "id": "25460",
+  "name": "George Busbee Pkwy at Frey Rd",
+  "campus": "Kennesaw",
+  "corridor": "Busbee Pkwy",
+  "lat": 34.04652822,
+  "lon": -84.58091758
+ },
+ {
+  "id": "22503",
+  "name": "Chastain Rd at Big Shanty Rd",
+  "campus": "Kennesaw",
+  "corridor": "Chastain Rd",
+  "lat": 34.0294,
+  "lon": -84.5841
+ },
+ {
+  "id": "22505",
+  "name": "Chastain Rd at George Busbee Pkwy",
+  "campus": "Kennesaw",
+  "corridor": "Chastain Rd",
+  "lat": 34.0361,
+  "lon": -84.5695
+ },
+ {
+  "id": "21594",
+  "name": "I-75 N past ChastainRd MM 271.6",
+  "campus": "Kennesaw",
+  "corridor": "I-75 N",
+  "lat": 34.040129,
+  "lon": -84.57869
+ },
+ {
+  "id": "20479",
+  "name": "I-75 S at ChastainRd MM 271",
+  "campus": "Kennesaw",
+  "corridor": "I-75 S",
+  "lat": 34.032711,
+  "lon": -84.57686
+ },
+ {
+  "id": "21622",
+  "name": "I-75 S past FreyRd MM 271.8",
+  "campus": "Kennesaw",
+  "corridor": "I-75 S",
+  "lat": 34.042184,
+  "lon": -84.580044
+ },
+ {
+  "id": "20873",
+  "name": "I-75 N before ChastainRd MM 270.8",
+  "campus": "Kennesaw",
+  "corridor": "I-75 N",
+  "lat": 34.029869,
+  "lon": -84.575422
+ },
+ {
+  "id": "23401",
+  "name": "SR 3/Cobb Pkwy at SR 120/S Marietta Pkwy",
+  "campus": "Marietta",
+  "corridor": "Cobb Pkwy",
+  "lat": 33.941933,
+  "lon": -84.51591
+ },
+ {
+  "id": "23419",
+  "name": "SR 120/S Marietta Pkwy at Aviation Rd",
+  "campus": "Marietta",
+  "corridor": "S Marietta Pkwy",
+  "lat": 33.94173,
+  "lon": -84.5286
+ },
+ {
+  "id": "21609",
+  "name": "I-75 S past RoswellRd MM 264",
+  "campus": "Marietta",
+  "corridor": "I-75 S",
+  "lat": 33.947922,
+  "lon": -84.515393
+ },
+ {
+  "id": "20466",
+  "name": "I-75 S at SR120/SMariettaPkwy MM 263.3",
+  "campus": "Marietta",
+  "corridor": "I-75 S",
+  "lat": 33.941592,
+  "lon": -84.505948
+ }
+]

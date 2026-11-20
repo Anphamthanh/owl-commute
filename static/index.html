@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owl Commute</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#262d36;--text:#e6edf3;--mute:#8b949e;--gold:#fdbb30;--green:#3fb950;--amber:#d29922;--red:#f85149;--blue:#58a6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+header{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+h1{font-size:20px;margin:0}h1 b{color:var(--gold)}.tag{color:var(--mute);font-size:13px}
+.sp{flex:1}.pill{padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid var(--line)}
+.live{background:#3fb95022;color:var(--green);border-color:#3fb95066}.rep{background:#d2992222;color:var(--amber);border-color:#d2992266}
+select,input,button{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit}
+button{cursor:pointer}button.pri{background:var(--gold);color:#111;border:0;font-weight:700}
+main{display:grid;grid-template-columns:380px 1fr;gap:16px;padding:16px 20px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.card h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin:0 0 12px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form label{font-size:12px;color:var(--mute);display:flex;flex-direction:column;gap:4px}
+.big{font-size:44px;font-weight:800;color:var(--gold);line-height:1.05;margin:8px 0 2px}
+.sub{color:var(--mute);font-size:13px}
+.bd{list-style:none;padding:0;margin:12px 0 0}.bd li{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:13px}
+.bd .m{min-width:44px;font-weight:700;text-align:right}.bd .src{color:var(--mute);font-size:11px}
+.bus{display:grid;grid-template-columns:1fr 60px;gap:4px 10px;align-items:center;font-size:13px;padding:5px 0}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;grid-column:1/3}.bar i{display:block;height:100%}
+#map{height:420px;border-radius:12px;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.cam{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cam img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.cam .b{padding:10px 12px}.cam .n{font-size:12px;color:var(--mute)}.cam .l{font-size:14px;margin:4px 0}
+.c-free_flow{background:#3fb95022;color:var(--green)}.c-moderate{background:#d2992222;color:var(--amber)}
+.c-heavy,.c-stopped{background:#f8514922;color:var(--red)}.c-unknown{background:#8b949e22;color:var(--mute)}
+.inc{color:var(--red);font-weight:700}
+.full{color:var(--red);font-weight:700}
+.leaflet-container{background:#ddd;font:13px system-ui}
+.busi{width:28px;height:28px;border-radius:50%;border:2px solid #111;color:#111;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 1px 4px #0008}
+.cami{width:30px;height:30px;border-radius:50%;background:#fff;border:4px solid;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 1px 4px #0008;cursor:pointer}
+.legend{background:#fffe;color:#111;padding:8px 10px;border-radius:8px;line-height:1.6;font-size:12px;box-shadow:0 1px 6px #0006}
+.cam.hl{outline:3px solid var(--gold)}
+#map{height:520px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🦉 Owl <b>Commute</b></h1>
+  <span class="tag">When do I leave, where do I park, which bus has room?</span>
+  <span class="sp"></span>
+  <span id="modepill" class="pill live">● LIVE</span>
+  <select id="mode"><option value="live">Live</option><option value="replay">Replay</option></select>
+  <select id="snap" style="display:none"></select>
+  <span id="asof" class="tag"></span>
+</header>
+<main>
+  <section>
+    <div class="card">
+      <h2>My commute</h2>
+      <div class="form">
+        <label>Campus<select id="campus"><option>Kennesaw</option><option>Marietta</option></select></label>
+        <label>Class day<select id="day"><option value="">Auto (day of the class)</option><option>Mon</option><option>Tue</option><option>Wed</option><option>Thu</option><option>Fri</option></select></label>
+        <label>Class starts<input id="ctime" type="time" value="09:30"></label>
+        <label>Normal drive (min)<input id="drive" type="number" value="25" min="0" max="180"></label>
+      </div>
+      <div style="margin-top:10px"><button class="pri" id="go">Check my commute</button></div>
+      <div id="adv"></div>
+    </div>
+    <div class="card"><h2>Big Owl Bus: seats right now</h2><div id="buses" class="sub">Loading…</div></div>
+  </section>
+  <section>
+    <div id="map"></div>
+    <div class="card" style="margin-top:16px"><h2>What the cameras see (vision model reads every frame)</h2><div id="cams" class="grid"></div></div>
+  </section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const map=L.map('map',{zoomControl:true}).setView([33.99,-84.55],12);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:19}).addTo(map);
+const VIEW={Kennesaw:[[34.0300,-84.5760],14],Marietta:[[33.9399,-84.5206],14]};
+const goCampus=()=>map.setView(...VIEW[$('#campus').value]);goCampus();
+const legend=L.control({position:'bottomleft'});legend.onAdd=()=>{const d=L.DomUtil.create('div','legend');d.innerHTML='<b>Bus</b> number = seats left <span style="color:#3fb950">●</span> room <span style="color:#d29922">●</span> filling <span style="color:#f85149">●</span> full<br><b>📷 Camera</b> <span style="color:#3fb950">●</span> clear <span style="color:#d29922">●</span> moderate <span style="color:#f85149">●</span> heavy/incident <span style="color:#8b949e">●</span> offline · click to see frame';return d};legend.addTo(map);
+const layer=L.layerGroup().addTo(map);
+L.marker([34.0381,-84.5827]).addTo(map).bindTooltip('KSU Kennesaw campus',{permanent:true,direction:'top',offset:[0,-30]});L.marker([33.9399,-84.5206]).addTo(map).bindTooltip('KSU Marietta campus',{permanent:true,direction:'top',offset:[0,-30]});
+let S=null;
+const q=()=>$('#mode').value==='replay'?`mode=replay&ts=${$('#snap').value}`:'mode=live';
+const loadColor=l=>l==null?'#8b949e':l>=1?'#f85149':l>=.75?'#d29922':'#3fb950';
+const fmtTs=t=>{const m=t.match(/(\d{4})(\d\d)(\d\d)-(\d\d)(\d\d)/);if(!m)return t;const d=new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]);return d.toLocaleString([], {weekday:'short',hour:'numeric',minute:'2-digit'})};
+async function snaps(){const s=await (await fetch('/api/snapshots')).json();$('#snap').innerHTML=s.slice().reverse().map(t=>`<option value="${t}">${fmtTs(t)}</option>`).join('')}
+async function load(){
+  S=await (await fetch('/api/state?'+q())).json();
+  $('#asof').textContent='as of '+new Date(S.as_of).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+  layer.clearLayers();
+  S.buses=S.buses.filter(b=>Math.abs(b.lat-34.0)<0.15&&Math.abs(b.lon+84.55)<0.15);
+  S.buses.forEach(b=>L.marker([b.lat,b.lon],{icon:L.divIcon({className:'',html:`<div class="busi" style="background:${loadColor(b.load)}">${Math.max(0,b.cap-b.pax)}</div>`,iconSize:[28,28],iconAnchor:[14,14]})}).addTo(layer).bindTooltip(`🚌 ${b.route} #${b.bus}: ${b.pax>=b.cap?'FULL':(b.cap-b.pax)+' seats left'} (${b.pax}/${b.cap})`));
+  S.cams.forEach(c=>{const r=c.read||{};const col=!r.camera_ok?'#8b949e':({free_flow:'#3fb950',moderate:'#d29922',heavy:'#f85149',stopped:'#f85149'})[r.congestion]||'#8b949e';
+    L.marker([c.lat,c.lon],{icon:L.divIcon({className:'',html:`<div class="cami" style="border-color:${col}">📷</div>`,iconSize:[30,30],iconAnchor:[15,15]})}).addTo(layer).bindTooltip(`<b>${c.name}</b><br>${r.one_line||'reading…'}`).on('click',()=>{const el=document.getElementById('cam-'+c.id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),2000)}})});
+  const byRoute={};S.buses.forEach(b=>(byRoute[b.route]=byRoute[b.route]||[]).push(b));
+  $('#buses').innerHTML=Object.entries(byRoute).map(([r,bs])=>`<div style="margin-bottom:8px"><b>${r}</b>${bs.map(b=>`<div class="bus"><span>#${b.bus} ${b.pax>=b.cap?'<span class="full">FULL</span>':`${b.cap-b.pax} seats`}</span><span class="sub">${b.pax}/${b.cap}</span><div class="bar"><i style="width:${Math.min(100,100*(b.load||0))}%;background:${loadColor(b.load)}"></i></div></div>`).join('')}</div>`).join('')||'No buses running right now.';
+  const rank=c=>{const r=c.read||{};if(!r.camera_ok)return 9;if(r.incident&&!['none','unclear'].includes(r.incident))return 0;return({stopped:1,heavy:2,moderate:3,free_flow:5,unknown:6})[r.congestion]??7};
+  $('#cams').innerHTML=S.cams.slice().sort((a,b)=>rank(a)-rank(b)).map(c=>{const r=c.read;const img=`/api/cam/${c.id}.png?${q()}&_=${Date.now()}`;
+    if(!r)return `<div class="cam"><img src="${img}"><div class="b"><div class="n">${c.corridor} · ${c.name}</div><div class="l sub">Vision model reading…</div></div></div>`;
+    const inc=r.incident&&!['none','unclear'].includes(r.incident)?`<span class="inc"> ⚠ ${r.incident.replace('_',' ')}</span>`:'';
+    return `<div class="cam" id="cam-${c.id}"><img src="${img}" loading="lazy"><div class="b"><div class="n">${c.corridor} · ${c.name}</div><div class="l">${r.one_line}</div>
+      <span class="pill c-${r.camera_ok?r.congestion:'unknown'}">${r.camera_ok?r.congestion.replace('_',' '):'offline'}</span>${inc}
+      <span class="sub" style="float:right">conf ${Math.round((r.confidence||0)*100)}%</span></div></div>`}).join('');
+}
+async function advise(){
+  const p=new URLSearchParams({campus:$('#campus').value,class_time:$('#ctime').value,drive_min:$('#drive').value});if($('#day').value)p.set('day',$('#day').value);
+  const a=await (await fetch('/api/advice?'+p+'&'+q())).json();
+  const km=a.km_buses.length?`<div class="sub" style="margin-top:10px">Kennesaw ↔ Marietta bus: ${a.km_buses.map(b=>b.full?`#${b.bus} <span class="full">FULL</span>`:`#${b.bus} ${b.seats_left} seats`).join(' · ')}</div>`:'';
+  $('#adv').innerHTML=`<div class="big">Leave by ${a.leave_by}</div>
+    <div class="sub">for your ${a.class_day} ${a.class_time} class · ${a.minutes_until_leave>=0?a.minutes_until_leave+' min from now':'you are '+(-a.minutes_until_leave)+' min late to leave'} · ${a.total_minutes} min door to seat</div>
+    <ul class="bd">${a.breakdown.map(x=>`<li><span class="m">+${x.minutes}</span><span>${x.why}<br><span class="src">${x.source}</span></span></li>`).join('')}</ul>${km}${(()=>{const n=a.notes||[];const w=n.filter(x=>x.startsWith('Watching'));const o=n.filter(x=>!x.startsWith('Watching'));return o.map(x=>`<div class="sub" style="margin-top:8px">ℹ️ ${x}</div>`).join('')+(w.length?`<div class="sub" style="margin-top:8px">👀 Watching ${w.length} camera${w.length>1?'s':''}: not adding time until a second frame confirms.</div>`:'')})()}`;
+}
+$('#mode').onchange=async()=>{const r=$('#mode').value==='replay';$('#snap').style.display=r?'':'none';$('#modepill').className='pill '+(r?'rep':'live');$('#modepill').textContent=r?'⏪ REPLAY':'● LIVE';if(r)await snaps();await load();if($('#adv').innerHTML)advise()};
+$('#snap').onchange=async()=>{await load();if($('#adv').innerHTML)advise()};
+$('#go').onclick=advise;$('#campus').onchange=goCampus;
+load();setInterval(()=>{if($('#mode').value==='live')load()},30000);
+</script>
+</body>
+</html>

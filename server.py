@@ -178,7 +178,7 @@ def advice(campus: str, class_time: str, drive_min: int, day: str, reads: dict, 
     roads_apply = (rough_leave - now) <= dt.timedelta(minutes=90)
     if not roads_apply:
         recheck = (rough_leave - dt.timedelta(minutes=60))
-        notes.append(f"Live road cameras kick in within 90 min of leaving. Recheck around {recheck.strftime('%-I:%M %p')}.")
+        notes.append(f"Traffic cameras are checked once you are within 90 minutes of leaving. Check back around {recheck.strftime('%-I:%M %p')}.")
     for c in CAMS:
         if not roads_apply or c["campus"] != campus or c["id"] not in reads:
             continue
@@ -194,12 +194,12 @@ def advice(campus: str, class_time: str, drive_min: int, day: str, reads: dict, 
         # Require two consecutive frames (~2 min apart) to agree before adding delay.
         confirmed = pr is not None and (PENALTY.get(pr.get("congestion"), 0) > 0 or (bad_inc and pr.get("incident") == r.get("incident")))
         if not confirmed:
-            notes.append(f"Watching {c['name']}: {r.get('one_line')} (needs a second frame to confirm)")
+            notes.append(f"Watching {c['corridor']} ({c['name']}): {r.get('one_line')} It counts only if the next picture agrees.")
             continue
         worst = by_corridor.get(c["corridor"])
         if worst is None or p > worst["minutes"]:  # cameras overlap: count only the worst camera per road
-            by_corridor[c["corridor"]] = {"minutes": p, "why": f"{c['name']}: {r.get('one_line')}",
-                                          "source": f"GDOT camera {c['id']} + vision model, confirmed on 2 frames"}
+            by_corridor[c["corridor"]] = {"minutes": p, "why": f"Traffic on {c['corridor']}: {r.get('one_line')}",
+                                          "source": f"Traffic camera at {c['name']}, same reading on 2 pictures in a row"}
     for r in by_corridor.values():
         reasons.append(r)
         extra += r["minutes"]
@@ -212,18 +212,18 @@ def advice(campus: str, class_time: str, drive_min: int, day: str, reads: dict, 
     hour = max(8, min(19, h))  # you hunt for parking in the hour your class starts
     demand = DEMAND[key][str(hour)]
     park = round(5 + 20 * demand)  # estimate: 5 min at an empty deck, up to 25 min at the day's peak
-    label = "after 7 PM" if h > 19 else "before 8 AM" if h < 8 else f"at {hour % 12 or 12} {'PM' if hour >= 12 else 'AM'}"
-    src = "KSU Parking Pulse" + (f" (no {day} chart published, Mon/Wed chart assumed)" if assumed else f" ({'Tue/Thu' if key.startswith('TR') else 'Mon/Wed'} chart)")
-    reasons.append({"minutes": park, "why": f"Parking search (estimate): {day} class demand {label} is {int(demand * 100)}% of the day's peak",
-                    "source": src})
+    label = "after 7 PM" if h > 19 else "before 8 AM" if h < 8 else f"{hour % 12 or 12} {'PM' if hour >= 12 else 'AM'}"
+    busy = "the busiest hour of the day" if demand >= 0.95 else f"{int(demand * 100)}% as busy as the busiest hour"
+    src = "Estimate from KSU's Parking Pulse chart" + (f" (KSU publishes no {day} chart, so the Mon/Wed chart is used)" if assumed else "")
+    reasons.append({"minutes": park, "why": f"Finding parking: {label} is {busy} at {campus}", "source": src})
     walk = 7
-    reasons.append({"minutes": walk, "why": "Walk from deck to class (estimate)", "source": "default"})
+    reasons.append({"minutes": walk, "why": "Walk from the deck to class", "source": "Estimate"})
     total = drive_min + extra + park + walk
     leave = cls - dt.timedelta(minutes=total)
     km = [b for b in buses if "Marietta" in b["route"] and "Kennesaw" in b["route"]]
     return {"class_time": cls.strftime("%-I:%M %p"), "class_day": day, "leave_by": leave.strftime("%-I:%M %p"),
             "minutes_until_leave": round((leave - now).total_seconds() / 60),
-            "breakdown": [{"minutes": drive_min, "why": "Your normal drive", "source": "you"}] + reasons,
+            "breakdown": [{"minutes": drive_min, "why": "Drive to campus", "source": "The time you entered"}] + reasons,
             "total_minutes": total, "demand": demand, "notes": notes,
             "km_buses": [{"bus": b["bus"], "seats_left": b["cap"] - b["pax"], "full": b["pax"] >= b["cap"]} for b in km]}
 

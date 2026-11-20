@@ -24,7 +24,7 @@ main{display:grid;grid-template-columns:380px 1fr;gap:16px;padding:16px 20px}
 .sub{color:var(--mute);font-size:13px}
 .bd{list-style:none;padding:0;margin:12px 0 0}.bd li{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:13px}
 .bd .m{min-width:44px;font-weight:700;text-align:right}.bd .src{color:var(--mute);font-size:11px}
-.bus{display:grid;grid-template-columns:1fr 60px;gap:4px 10px;align-items:center;font-size:13px;padding:5px 0}
+.bus{display:grid;grid-template-columns:1fr 90px;gap:4px 10px;align-items:center;font-size:13px;padding:5px 0}
 .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;grid-column:1/3}.bar i{display:block;height:100%}
 #map{height:420px;border-radius:12px;border:1px solid var(--line)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
@@ -66,11 +66,11 @@ main{display:grid;grid-template-columns:380px 1fr;gap:16px;padding:16px 20px}
       <div style="margin-top:10px"><button class="pri" id="go">Check my commute</button></div>
       <div id="adv"></div>
     </div>
-    <div class="card"><h2>Big Owl Bus: seats right now</h2><div id="buses" class="sub">Loading…</div></div>
+    <div class="card"><h2>Big Owl Bus: seats left right now</h2><div id="buses" class="sub">Loading…</div></div>
   </section>
   <section>
     <div id="map"></div>
-    <div class="card" style="margin-top:16px"><h2>What the cameras see (vision model reads every frame)</h2><div id="cams" class="grid"></div></div>
+    <div class="card" style="margin-top:16px"><h2>What the cameras see right now (an AI reads each picture)</h2><div id="cams" class="grid"></div></div>
   </section>
 </main>
 <script>
@@ -96,22 +96,22 @@ async function load(){
   S.cams.forEach(c=>{const r=c.read||{};const col=!r.camera_ok?'#8b949e':({free_flow:'#3fb950',moderate:'#d29922',heavy:'#f85149',stopped:'#f85149'})[r.congestion]||'#8b949e';
     L.marker([c.lat,c.lon],{icon:L.divIcon({className:'',html:`<div class="cami" style="border-color:${col}">📷</div>`,iconSize:[30,30],iconAnchor:[15,15]})}).addTo(layer).bindTooltip(`<b>${c.name}</b><br>${r.one_line||'reading…'}`).on('click',()=>{const el=document.getElementById('cam-'+c.id);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('hl');setTimeout(()=>el.classList.remove('hl'),2000)}})});
   const byRoute={};S.buses.forEach(b=>(byRoute[b.route]=byRoute[b.route]||[]).push(b));
-  $('#buses').innerHTML=Object.entries(byRoute).map(([r,bs])=>`<div style="margin-bottom:8px"><b>${r}</b>${bs.map(b=>`<div class="bus"><span>#${b.bus} ${b.pax>=b.cap?'<span class="full">FULL</span>':`${b.cap-b.pax} seats`}</span><span class="sub">${b.pax}/${b.cap}</span><div class="bar"><i style="width:${Math.min(100,100*(b.load||0))}%;background:${loadColor(b.load)}"></i></div></div>`).join('')}</div>`).join('')||'No buses running right now.';
+  $('#buses').innerHTML=Object.entries(byRoute).map(([r,bs])=>`<div style="margin-bottom:8px"><b>${r}</b>${bs.map(b=>`<div class="bus"><span>#${b.bus}: ${b.pax>=b.cap?'<span class="full">FULL</span>':`${b.cap-b.pax} seats left`}</span><span class="sub">${b.pax} on board</span><div class="bar"><i style="width:${Math.min(100,100*(b.load||0))}%;background:${loadColor(b.load)}"></i></div></div>`).join('')}</div>`).join('')||'No buses running right now.';
   const rank=c=>{const r=c.read||{};if(!r.camera_ok)return 9;if(r.incident&&!['none','unclear'].includes(r.incident))return 0;return({stopped:1,heavy:2,moderate:3,free_flow:5,unknown:6})[r.congestion]??7};
   $('#cams').innerHTML=S.cams.slice().sort((a,b)=>rank(a)-rank(b)).map(c=>{const r=c.read;const img=`/api/cam/${c.id}.png?${q()}&_=${Date.now()}`;
     if(!r)return `<div class="cam"><img src="${img}"><div class="b"><div class="n">${c.corridor} · ${c.name}</div><div class="l sub">Vision model reading…</div></div></div>`;
     const inc=r.incident&&!['none','unclear'].includes(r.incident)?`<span class="inc"> ⚠ ${r.incident.replace('_',' ')}</span>`:'';
     return `<div class="cam" id="cam-${c.id}"><img src="${img}" loading="lazy"><div class="b"><div class="n">${c.corridor} · ${c.name}</div><div class="l">${r.one_line}</div>
-      <span class="pill c-${r.camera_ok?r.congestion:'unknown'}">${r.camera_ok?r.congestion.replace('_',' '):'offline'}</span>${inc}
+      <span class="pill c-${r.camera_ok?r.congestion:'unknown'}">${r.camera_ok?(({free_flow:'clear',moderate:'moderate',heavy:'heavy',stopped:'stopped',unknown:"can't tell"})[r.congestion]||r.congestion):'offline'}</span>${inc}
       <span class="sub" style="float:right">conf ${Math.round((r.confidence||0)*100)}%</span></div></div>`}).join('');
 }
 async function advise(){
   const p=new URLSearchParams({campus:$('#campus').value,class_time:$('#ctime').value,drive_min:$('#drive').value});if($('#day').value)p.set('day',$('#day').value);
   const a=await (await fetch('/api/advice?'+p+'&'+q())).json();
-  const km=a.km_buses.length?`<div class="sub" style="margin-top:10px">Kennesaw ↔ Marietta bus: ${a.km_buses.map(b=>b.full?`#${b.bus} <span class="full">FULL</span>`:`#${b.bus} ${b.seats_left} seats`).join(' · ')}</div>`:'';
+  const km=a.km_buses.length?`<div class="sub" style="margin-top:10px">Bus to the other campus: ${a.km_buses.map(b=>b.full?`#${b.bus} <span class="full">FULL</span>`:`#${b.bus} ${b.seats_left} seats left`).join(' · ')}</div>`:'';
   $('#adv').innerHTML=`<div class="big">Leave by ${a.leave_by}</div>
-    <div class="sub">for your ${a.class_day} ${a.class_time} class · ${a.minutes_until_leave>=0?a.minutes_until_leave+' min from now':'you are '+(-a.minutes_until_leave)+' min late to leave'} · ${a.total_minutes} min door to seat</div>
-    <ul class="bd">${a.breakdown.map(x=>`<li><span class="m">+${x.minutes}</span><span>${x.why}<br><span class="src">${x.source}</span></span></li>`).join('')}</ul>${km}${(()=>{const n=a.notes||[];const w=n.filter(x=>x.startsWith('Watching'));const o=n.filter(x=>!x.startsWith('Watching'));return o.map(x=>`<div class="sub" style="margin-top:8px">ℹ️ ${x}</div>`).join('')+(w.length?`<div class="sub" style="margin-top:8px">👀 Watching ${w.length} camera${w.length>1?'s':''}: not adding time until a second frame confirms.</div>`:'')})()}`;
+    <div class="sub">${a.class_day} ${a.class_time} class · ${a.minutes_until_leave>=0?'leave in '+a.minutes_until_leave+' min':'you are '+(-a.minutes_until_leave)+' min past your leave time'} · ${a.total_minutes} min from door to seat</div>
+    <ul class="bd">${a.breakdown.map(x=>`<li><span class="m">+${x.minutes}</span><span>${x.why}<br><span class="src">${x.source}</span></span></li>`).join('')}</ul>${km}${(()=>{const n=a.notes||[];const w=n.filter(x=>x.startsWith('Watching'));const o=n.filter(x=>!x.startsWith('Watching'));return o.map(x=>`<div class="sub" style="margin-top:8px">ℹ️ ${x}</div>`).join('')+(w.length?`<div class="sub" style="margin-top:8px">👀 Watching ${w.length} camera${w.length>1?'s':''}: a slowdown showed up once. It counts only if the next picture agrees.</div>`:'')})()}`;
 }
 $('#mode').onchange=async()=>{const r=$('#mode').value==='replay';$('#snap').style.display=r?'':'none';$('#modepill').className='pill '+(r?'rep':'live');$('#modepill').textContent=r?'⏪ REPLAY':'● LIVE';if(r)await snaps();await load();if($('#adv').innerHTML)advise()};
 $('#snap').onchange=async()=>{await load();if($('#adv').innerHTML)advise()};

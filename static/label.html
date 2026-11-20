@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Owl Commute: label frames</title>
+<style>
+body{margin:0;background:#0e1116;color:#e6edf3;font:15px/1.45 system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px}
+img{width:100%;max-height:540px;object-fit:contain;background:#000;border-radius:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+button{background:#161b22;color:#e6edf3;border:1px solid #262d36;border-radius:8px;padding:10px 16px;font:inherit;cursor:pointer}
+button.on{background:#fdbb30;color:#111;font-weight:700}
+.mute{color:#8b949e}.box{background:#161b22;border:1px solid #262d36;border-radius:10px;padding:12px;margin:10px 0}
+kbd{background:#262d36;border-radius:4px;padding:1px 6px;font-size:12px}
+</style>
+</head>
+<body><main>
+<h2>Label rush-hour frames <span class="mute" id="prog"></span></h2>
+<p class="mute">Say what YOU see. The model's answer is hidden until you pick, so it cannot steer you. Keys: <kbd>1</kbd> free flow <kbd>2</kbd> moderate <kbd>3</kbd> heavy <kbd>4</kbd> stopped <kbd>0</kbd> can't tell, then <kbd>y</kbd>/<kbd>n</kbd> incident, <kbd>Enter</kbd> next.</p>
+<div class="box"><div id="name" class="mute"></div><img id="img"></div>
+<div class="box">Traffic: <div class="row" id="cong"></div>Incident (crash, stalled car, emergency lights, debris) clearly visible? <div class="row" id="inc"></div>
+<div id="model" class="mute"></div><div class="row"><button id="next">Save and next (Enter)</button></div></div>
+<div class="box" id="score"></div>
+<script>
+const $=s=>document.querySelector(s);const qs=new URLSearchParams(location.search);
+let frames=[],i=0,pick={};
+const CONG=[['free_flow','1 Free flow'],['moderate','2 Moderate'],['heavy','3 Heavy'],['stopped','4 Stopped'],['unknown','0 Can\'t tell']];
+const INC=[['no','n No'],['yes','y Yes']];
+function btns(id,list,key){$(id).innerHTML=list.map(([v,l])=>`<button data-v="${v}" class="${pick[key]===v?'on':''}">${l}</button>`).join('');$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{pick[key]=b.dataset.v;btns(id,list,key);reveal()})}
+function reveal(){if(pick.c&&pick.i){const r=frames[i].read;$('#model').textContent=`Model said: ${r.congestion}, incident ${r.incident}, confidence ${r.confidence}. "${r.one_line}"`}}
+function show(){if(i>=frames.length){$('#img').style.display='none';$('#name').textContent='Done.';score();return}
+  const f=frames[i];pick={};$('#prog').textContent=`${i+1} / ${frames.length}`;$('#name').textContent=`${f.name} at ${f.ts.slice(9,11)}:${f.ts.slice(11,13)}:${f.ts.slice(13,15)}`;
+  $('#img').src=`/api/cam/${f.cid}.png?mode=replay&ts=${f.ts}`;$('#model').textContent='';btns('#cong',CONG,'c');btns('#inc',INC,'i')}
+async function save(){if(!pick.c||!pick.i)return;await fetch('/api/label',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ts:frames[i].ts,cid:frames[i].cid,congestion:pick.c,incident:pick.i==='yes'})});i++;show()}
+async function score(){const s=await (await fetch('/api/label/score')).json();$('#score').innerHTML=`<b>Agreement so far</b><br>Congestion, exact: ${s.cong_exact} of ${s.n} (${s.cong_exact_pct}%)<br>Congestion, slow vs not slow (heavy/stopped vs free/moderate): ${s.cong_bin} of ${s.n} (${s.cong_bin_pct}%)<br>Incident yes/no: ${s.inc} of ${s.n} (${s.inc_pct}%)<br><span class="mute">Frames where you said "can't tell" are excluded from congestion counts (${s.unknown} excluded).</span>`}
+$('#next').onclick=save;
+document.onkeydown=e=>{const k=e.key;const c={'1':'free_flow','2':'moderate','3':'heavy','4':'stopped','0':'unknown'}[k];if(c){pick.c=c;btns('#cong',CONG,'c');reveal()}if(k==='y'||k==='n'){pick.i=k==='y'?'yes':'no';btns('#inc',INC,'i');reveal()}if(k==='Enter')save()};
+(async()=>{frames=await (await fetch('/api/label/frames?'+qs)).json();show();score()})();
+</script>
+</main></body>
+</html>

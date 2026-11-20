@@ -69,10 +69,14 @@ def bullets(s, items, left=0.6, top=1.5, width=6.3, height=5.4, size=18):
     return tb
 
 
-def picture(s, name, left=7.1, top=1.5, width=5.8):
+def picture(s, name, left=7.1, top=1.5, width=5.8, max_height=5.6):
+    """Place an image scaled to fit inside a width by max_height box (tall app screenshots must not run off the slide)."""
     p = IMG / name
     if p.exists():
-        s.shapes.add_picture(str(p), Inches(left), Inches(top), width=Inches(width))
+        from PIL import Image
+        w, h = Image.open(p).size
+        scale = min(width / w, max_height / h)
+        s.shapes.add_picture(str(p), Inches(left), Inches(top), width=Inches(w * scale), height=Inches(h * scale))
     else:
         tb = s.shapes.add_textbox(Inches(left), Inches(top), Inches(width), Inches(1))
         r = tb.text_frame.paragraphs[0].add_run()
@@ -151,13 +155,13 @@ bullets(s, [
     "The sentence is what a student reads; the structured fields drive the leave-by math",
     "A car counter cannot tell a red-light queue from a jam, or see emergency lights. A vision language model can",
 ], width=6.2)
-picture(s, "cam-frey-police.png", left=7.1, top=1.5, width=5.8)
-picture(s, FACTS.get("rush_image", "rush-frame.png"), left=7.1, top=4.4, width=5.8)
+picture(s, "cam-frey-police.png", left=7.1, top=1.5, width=5.8, max_height=2.8)
+picture(s, FACTS.get("rush_image", "rush-frame.png"), left=7.1, top=4.4, width=5.8, max_height=2.8)
 note(s, "2:00 to 4:00 is the demo. This slide backs it up if the live feed fails.")
 
 # 6. Accuracy and safeguards
 acc, acc_tbd = fact("accuracy_line")
-s = slide("Accuracy and safeguards: the model can be wrong, so we check it", "Measured, not assumed")
+s = slide("Accuracy and safeguards: the model can be wrong", "So we measure it and never trust one frame")
 bullets(s, [
     (acc, "tbd" if acc_tbd else None),
     ("Labeled by eye on Fri Nov 20 morning frames, then scored against the model's reads (data/labels.json)", "src"),

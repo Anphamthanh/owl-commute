@@ -196,7 +196,7 @@ bullets(s, [
     "Fri, Sat, Sun have no Parking Pulse chart; the app uses the Mon/Wed chart and labels it as an assumption",
     "Some Marietta cameras are offline; coverage there is thinner",
     "Night, fog, and glare lower the model's confidence; it says unknown rather than guessing",
-    "Accuracy was measured on one morning, by one labeler",
+    "Accuracy was spot-checked on one morning by one labeler, an AI assistant, not an independent human pass",
 ], width=12)
 note(s, "Judges trust a team that names its limits before they do.")
 

@@ -5,3 +5,6 @@ data/
 shot-*.png
 pulse.html
 .DS_Store
+video/*.mp4
+video/*.aiff
+video/clips/

@@ -171,7 +171,8 @@ bullets(s, [
     "Dead cameras detected by file size and skipped (3 Marietta cameras were offline this week)",
     "Gemini 3 Flash called a glare-smeared empty I-75 frame \"free flow, 0.9 confidence\"; Pro said \"unclear\". We use Pro",
     "Confidence below 0.6 is ignored",
-], width=12, size=17)
+    "Known miss: a persistent misread passes two-frame confirmation. Fri 7:37 to 7:50 AM the model reported a \"crash\" at Frey Rd in dense fog for 7 frames; not verifiable by eye. Next: incidents become a warning, not minutes",
+], width=12, size=16)
 note(s, "Give the number, then the N. Say what was not measured: afternoons, rain, Marietta.")
 
 # 7. Feasibility

@@ -2,62 +2,77 @@
 
 Tracks entered: **AI Club** and **Nudox**. Say both in the first 15 seconds.
 
-## 1. Setup before they call your name
+## 1. What is on the laptop
 
-- Browser at http://localhost:8000, zoom 125%, display mirrored (not extended).
-- **Tab 1 (Live):** campus Marietta, class time about 60 minutes ahead, drive 25, click Check my commute.
-- **Tab 2 (Replay):** Mode Replay, snapshot Fri 7:29 AM, campus Marietta, class 08:30, click Check my commute.
-- Glance at the bus panel: note which buses say FULL right now.
-- Glance at the top camera card: that is the one you will read aloud.
-- Glance at the card: if it has a "Traffic on ..." line, use it; if not, the Replay tab is where the delay example lives.
+Two windows, nothing else open:
 
-## 2. Transcript with slide and screen markers
+| Window | File or address | Used for |
+|---|---|---|
+| **Preview** | `~/Downloads/Owl Commute - present.pdf` (5 pages: title, problem, accuracy, feasibility, tools) | The talking parts |
+| **Browser** | http://localhost:8000, two tabs | The demo |
 
-Slides come from the PDF in Preview (full screen, arrow keys). Cmd+Tab switches between Preview and the browser.
-You use slides 1, 2, 6, 7, 9 only. Slides 3, 4, 5, 8 are skipped because the live app shows them better.
+Browser tabs:
+- **Tab 1, Live:** campus Marietta, class time about 60 minutes ahead, drive 25, Check my commute clicked.
+- **Tab 2, Replay:** Mode Replay, snapshot Fri 7:29 AM, campus Marietta, class 08:30, Check my commute clicked.
 
-**0:00  SLIDE 1 (title)**
+Keys you will press, in order: `Cmd+Ctrl+F` once (Preview full screen), then `→` for the next page, `Cmd+Tab` to swap
+Preview and the browser, `Cmd+1` and `Cmd+2` for the two browser tabs. Nothing else.
+
+## 2. Before they call your name
+
+1. Mirror the display (not extend). Browser zoom 125%.
+2. Preview on page 1, full screen (`Cmd+Ctrl+F`).
+3. Browser on Tab 1 (Live). Re-click Check my commute so the card is fresh.
+4. Glance at the bus panel: note which buses say FULL.
+5. Glance at the top camera card: you will read it aloud.
+6. Glance at the card: does it have a "Traffic on ..." line? Either way is fine; Replay carries the delay example.
+7. `Cmd+Tab` to Preview so you start on page 1.
+
+## 3. The talk, step by step
+
+**0:00  PREVIEW page 1 (title)**
 Hi, I'm An Pham, a computer science master's student. My project is Owl Commute, and I'm entering it in two tracks: the AI Club track and the Nudox track.
 
-**0:15  SLIDE 2 (the problem)**
+**0:15  press `→`  PREVIEW page 2 (the problem)**
 Every commuter in this room knows the problem. Last year 1,425 students signed a petition about parking and buses. The Sentinel quoted a senior who shows up an hour early just to find a spot. The bus between campuses fills up and leaves people at the stop. So we all leave early and guess. Owl Commute replaces the guess.
 
-**1:00  SWITCH TO BROWSER, Tab 1 (Live)**
+**1:00  `Cmd+Tab`  BROWSER, Tab 1 (Live)**
 Look at the bus panel right now: (point) these buses say FULL, live, at (read the time).
 
 One question: when do I leave? I typed my campus, my class time, and my normal drive. It says leave by (read the time), and every minute is explained. My drive. Finding parking, from KSU's own demand chart for that hour. The walk from the deck. And road delay, but only when the cameras confirm it. The estimates say estimate. Nothing here is a black box.
 
-**1:50  (scroll to the camera grid)**
+**1:50  scroll down to the camera grid**
 These are the public GDOT traffic cameras around both campuses, sixteen of them. An AI reads every picture every two minutes and writes one sentence a student can read. (Read the top card aloud.) It's not counting cars; it's telling you what's happening. (Scroll up, click one camera marker on the map.) Click a camera on the map and you jump to its picture.
 
-**2:45  Tab 2 (Replay, Fri 7:29 AM)**
+**2:45  `Cmd+2`  BROWSER, Tab 2 (Replay, Fri 7:29 AM)**
 Right now the roads are easy, so let me play back this morning's rush. 7:29 AM. The model read the I-75 South camera as heavy traffic in the main lanes with the express lanes flowing. I checked that frame by eye; that is exactly what it shows. The card added ten minutes, and only because two frames, two minutes apart, agreed. One frame can be wrong, so one frame is never enough.
 
-**3:30  SWITCH TO PREVIEW, SLIDE 6 (accuracy and safeguards)**
+**3:30  `Cmd+Tab`, then `→`  PREVIEW page 3 (accuracy and safeguards)**
 Because the AI can be wrong, I measured it instead of assuming. Twenty rush-hour frames checked by eye this morning: twenty of twenty on whether a road was slow. Its crash calls in fog were wrong, zero of eight, so the next version turns those into a warning instead of minutes. The limits are on this slide and in the repo.
 
-**4:05  SLIDE 7 (feasibility)**
+**4:05  press `→`  PREVIEW page 4 (feasibility)**
 How KSU could run this: every input is public. Camera frames from GDOT, live seat counts from the Big Owl Bus system, KSU's own Parking Pulse chart. The model costs about twelve dollars a day for both campuses, measured from 595 real reads. Users cost nothing extra, because each camera is read once no matter how many students ask. It's one small server. The missing piece is live deck counters; when KSU adds them, the parking estimate becomes a measurement.
 
-**4:40  SLIDE 9 (tools and code)**
+**4:40  press `→`  PREVIEW page 5 (tools and code)**
 For the Nudox track: the code is public, twenty small commits, one change each, and the README says where to start.
 
 Owl Commute: leave by this time, park here, take that bus. Thank you.
 
-(Stop on slide 9. Wait for questions. Cmd+Tab back to the browser if a question needs the app.)
+**Stop on page 5. Wait for questions.** `Cmd+Tab` back to the browser only if a question needs the app.
 
-## 3. If something goes wrong
+## 4. If something goes wrong
 
 | Problem | Do this |
 |---|---|
-| Live card has no camera line | Normal at quiet times. Say "the roads are easy right now" and go to the Replay tab for the delay example. |
+| Live card has no camera line | Normal at quiet times. Say "the roads are easy right now" and let Tab 2 carry the delay example. |
 | No bus says FULL | Say "earlier tonight three buses were full: 2603, 2616, 2604." |
-| Wi-Fi drops | Replay works offline (map tiles go gray). Present from Tab 2 only. |
+| Wi-Fi drops | Replay works offline (map tiles go gray). Do the whole demo from Tab 2. |
 | Page won't load | Terminal: `cd ~/projects/ksu/hackathon && .venv/bin/uvicorn server:app --port 8000` (key must be in the environment). |
-| Cut to 3 minutes | Skip the map click and shorten the measurement to one sentence: "twenty of twenty on slow versus not slow, and the slide says where it was wrong." |
-| Asked to see a failure | Replay Fri 7:39 AM, Kennesaw, class 8:30: the Frey Rd "crash" in fog. Say "this is the one I flagged on the slide." |
+| Projector shows nothing after Cmd+Tab | The display is set to extend, not mirror. System Settings, Displays, Mirror. |
+| Cut to 3 minutes | Skip the map click, and shorten page 3 to one sentence: "twenty of twenty on slow versus not slow, and the slide says where it was wrong." |
+| Asked to see a failure | Tab 2: snapshot Fri 7:39 AM, Kennesaw, class 08:30, Check. The Frey Rd "crash" in fog. Say "this is the one I flagged on the slide." |
 
-## 4. Questions and answers
+## 5. Questions and answers
 
 - **Why not Google Maps?** Maps gives drive time. It doesn't know parking search time at KSU, which bus has seats, or why a road is slow. Owl Commute adds those three and shows its reasons.
 - **How accurate is the AI?** Twenty frames from one morning, checked by eye: 20 of 20 on slow vs not slow, 18 of 20 on the exact level, 0 of 8 incident calls verifiable in fog. Not tested: afternoons, rain, the Marietta-side cameras (three were offline all week).
@@ -69,7 +84,7 @@ Owl Commute: leave by this time, park here, take that bus. Thank you.
 - **The GitHub link?** It was public the whole time and opens now; the code also went to the organizers as a zip.
 - **Did you build it alone?** Yes, solo, this week, with AI coding tools. The design, the data sources, the safeguards, and the accuracy check are mine.
 
-## 5. Facts and where they come from
+## 6. Facts and where they come from
 
 | Fact | Source |
 |---|---|

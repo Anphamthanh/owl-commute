@@ -11,33 +11,40 @@ Tracks entered: **AI Club** and **Nudox**. Say both in the first 15 seconds.
 - Glance at the top camera card: that is the one you will read aloud.
 - Glance at the card: if it has a "Traffic on ..." line, use it; if not, the Replay tab is where the delay example lives.
 
-## 2. Transcript with timings
+## 2. Transcript with slide and screen markers
 
-**0:00 (Live tab)**
+Slides come from the PDF in Preview (full screen, arrow keys). Cmd+Tab switches between Preview and the browser.
+You use slides 1, 2, 6, 7, 9 only. Slides 3, 4, 5, 8 are skipped because the live app shows them better.
+
+**0:00  SLIDE 1 (title)**
 Hi, I'm An Pham, a computer science master's student. My project is Owl Commute, and I'm entering it in two tracks: the AI Club track and the Nudox track.
 
-Every commuter in this room knows the problem. Last year 1,425 students signed a petition about parking and buses. The Sentinel quoted a senior who shows up an hour early just to find a spot. The bus between campuses fills up and leaves people at the stop. Look at the bus panel right now: (point) these buses say FULL, live, at (read the time). So we all leave early and guess. Owl Commute replaces the guess.
+**0:15  SLIDE 2 (the problem)**
+Every commuter in this room knows the problem. Last year 1,425 students signed a petition about parking and buses. The Sentinel quoted a senior who shows up an hour early just to find a spot. The bus between campuses fills up and leaves people at the stop. So we all leave early and guess. Owl Commute replaces the guess.
 
-**1:00 (point at the card)**
+**1:00  SWITCH TO BROWSER, Tab 1 (Live)**
+Look at the bus panel right now: (point) these buses say FULL, live, at (read the time).
+
 One question: when do I leave? I typed my campus, my class time, and my normal drive. It says leave by (read the time), and every minute is explained. My drive. Finding parking, from KSU's own demand chart for that hour. The walk from the deck. And road delay, but only when the cameras confirm it. The estimates say estimate. Nothing here is a black box.
 
-**1:45 (scroll to the camera grid)**
+**1:50  (scroll to the camera grid)**
 These are the public GDOT traffic cameras around both campuses, sixteen of them. An AI reads every picture every two minutes and writes one sentence a student can read. (Read the top card aloud.) It's not counting cars; it's telling you what's happening. (Scroll up, click one camera marker on the map.) Click a camera on the map and you jump to its picture.
 
-**2:45 (Tab 2, Replay 7:29 AM)**
+**2:45  Tab 2 (Replay, Fri 7:29 AM)**
 Right now the roads are easy, so let me play back this morning's rush. 7:29 AM. The model read the I-75 South camera as heavy traffic in the main lanes with the express lanes flowing. I checked that frame by eye; that is exactly what it shows. The card added ten minutes, and only because two frames, two minutes apart, agreed. One frame can be wrong, so one frame is never enough.
 
-**3:30**
-Because the AI can be wrong, I measured it instead of assuming. Twenty rush-hour frames checked by eye this morning: twenty of twenty on whether a road was slow. Its crash calls in fog were wrong, zero of eight, so the next version turns those into a warning instead of minutes. That number and its limits are on the slides and in the repo.
+**3:30  SWITCH TO PREVIEW, SLIDE 6 (accuracy and safeguards)**
+Because the AI can be wrong, I measured it instead of assuming. Twenty rush-hour frames checked by eye this morning: twenty of twenty on whether a road was slow. Its crash calls in fog were wrong, zero of eight, so the next version turns those into a warning instead of minutes. The limits are on this slide and in the repo.
 
-**4:00**
+**4:05  SLIDE 7 (feasibility)**
 How KSU could run this: every input is public. Camera frames from GDOT, live seat counts from the Big Owl Bus system, KSU's own Parking Pulse chart. The model costs about twelve dollars a day for both campuses, measured from 595 real reads. Users cost nothing extra, because each camera is read once no matter how many students ask. It's one small server. The missing piece is live deck counters; when KSU adds them, the parking estimate becomes a measurement.
 
+**4:40  SLIDE 9 (tools and code)**
 For the Nudox track: the code is public, twenty small commits, one change each, and the README says where to start.
 
 Owl Commute: leave by this time, park here, take that bus. Thank you.
 
-(Stop. Wait for questions.)
+(Stop on slide 9. Wait for questions. Cmd+Tab back to the browser if a question needs the app.)
 
 ## 3. If something goes wrong
 

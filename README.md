@@ -73,3 +73,17 @@ precompute_rush.py   pre-read a window of snapshots for replay
 pitch/               video script, pitch notes, cost calculator
 deck/                pitch deck builder, facts.json, screenshots
 ```
+
+## Code map with Nudox
+
+The codebase is indexed with [Nudox](https://nudox.org), a local code-intelligence tool. Index a fresh clone (not a
+working copy with a `.venv` inside, which Nudox's Python profile trips over):
+
+```bash
+git clone https://github.com/Anphamthanh/owl-commute && cd owl-commute
+nudox add . --wait          # 5 Python files, 317 declarations, all lanes ready
+nudox outline . --top-level # containment tree of server.py, precompute_rush.py, pulse/, pitch/, deck/
+nudox search advice         # find the leave-by function and everything that calls it
+```
+
+`pitch/nudox-session.txt` is a saved session showing the outline, search, and reference queries on this repo.

@@ -1,0 +1,81 @@
+# Nudox session on a clean clone of Anphamthanh/owl-commute (Nov 19, 2026, 9:55 PM)
+
+$ nudox auth status
+Signed in as apham7@students.kennesaw.edu (Free plan)
+Key: ndx_[redacted] (saved in ~/Library/Application Support/Nudox/account/api-key)
+Usage: 0 of 500 this period (0 MCP tool calls)
+
+$ nudox packages
+● owl-clean  ready · 317 row(s)
+  <clean clone>
+1 project(s) · revision 2860ba45 · lanes ready · 317 row(s)
+~lanes exact✓317 names✓317 graph✓317 semantic✓317
+
+$ nudox outline . --top-level
+owl-clean
+  <clean clone>
+
+▪ IMG  :15
+ƒ slide  :31
+ƒ bullets  :49
+▪ BLANK  :23
+▪ FACTS  :16
+ƒ picture  :72
+▪ HERE  :14
+ƒ note  :86
+ƒ fact  :26
+▪ ALLDAY_CYCLES  :14
+ƒ main  :17
+▪ CAMS_LIVE  :12
+▪ RUSH_CYCLES  :13
+▪ HOURS  :17
+▪ HERE  :14
+ƒ bar_heights  :21
+▪ SAT  :18
+ƒ main  :49
+▪ CHARTS  :15
+ƒ read_frame  :59
+ƒ state  :248
+▪ LIVE  :90
+ƒ label_score  :327
+▪ DEMAND  :22
+ƒ index  :232
+ƒ get_advice  :277
+ƒ label_frames  :296
+▪ ROOT  :19
+ƒ read_all  :83
+ƒ live_buses  :111
+▪ LABELS  :287
+ƒ all_snapshots  :127
+32 declaration(s) · truncated (outline pagination only; analysis coverage is not certified) · 48 anonymous or function-local left out (omit top_level to list them)
+More declarations remain beyond this bounded prefix. Continue outline with --limit 80 and the next cursor.
+
+
+next cursor (continue the same command with `--cursor`): `pc4-eJy1VntQFEce7lmCggS9CxHvvIQjcyencTc7z56Z5YIRRcQT3OgJWkkkPT09MLKv7ANEUOIDT4hKtCQajZeo-CCeJuqdL5TTRFQoPQj4KqOeMaXGB2h8xVBWvFpcTKryx5I_rv_p6u6vv9_j-_16JvVV-whAARDRr4QuJF6f4XbRNoEx017yVoD4_LmGRttYM43dTidyabSthC4wgjPtDvgdhovkelAeoc20hvwoeOpBuCC4Y6N1WVY4hcNI4nSo84rASgpSOV0lUIG8rGgcTzgVK7zMQUknSIdQxgIvQF5QkMJotJnu4raV0CryGT7aRnMyZFQkiIrIQ1lgNMLJIoskggiRdJYRFJHossjrPBJEhiGSKEORFzFHREGCSFdoM-0wnIaftsmMmS4yXJq7KMj_JHLWTBs-X4BojxEacRiFxFscXM0IJsHlN1wB5O_CltBegg1PMFREWIUXMWYxT7AmMQQRRpdYBCVNZEWB1SFHIA85XocSVljIqLzAcBIPdU5UdCzR5h9doBGr6owocjIDNUWWdU5kJRXyGMpElUUsYonldVHQVB4KWNGxImhE0jVO4xkEZV6nzbTqRS6cT9toAYoMEoNnMhYZCUOOVVUJaQQrkEc6wpKqSQKjqlgWGUZSWaxBRkFQ0lVOkLkgl8OdR9tolkMCo7JI0WSVRzqjcERVREkQJVGBEmYVJGqqgpEgE42IAsdBwsk6p_CQJbwEGdpM-3A-cSLaxptpr9vtp200IRgSTWc1LAmaxisC4RlGFSQNKiohuiBDlhd1neEghroQjBEKOtIZFnI64hg1SBosUxcmtI0z028FiLc4163rPhKS-PHOLxS6a1AAgOiY2sqkir5j2zfOqHzEVuunezcvSt5Q2rnfVTbEnvTyvxoOhDun0vZVnkvYOGPqyq1Fd6LfNc0xjl7JWBh_uC--lFQ253Wxoa6j7sZf6Xx17n9PTvaQfgn_yWpqaTNqPFFNR65-5r0KANWYk21nczJHcSYAAAXGrRx29MzKVzYdfSXidNTa4zNPNdz-YGFb8cmqc1f3z4_sP6uUP9gQmTw12TTlyNc1fOtHU7KappzZXLfrk2cKkv-y9fvoSdOSt2_dHX_-4dr79vcXV80e4FX6O_YuKT2xLWZ3ZlH6KmN9TMpHS-sD7q8sY_jbQ_843D3hQb1Ruvp09fTywf9Y9gWFQAQVzgkAgGkZMFEooXre3ucza_YvKvjNqro7Mnv89pfitcbXttzfKVNbv-pYBiIiVpQuTow90ZLYuXF97YTmyk8v3_xm1eY9HwsPavS2G8-n1AIAQM6ITM4ULlenlteemVx_7PwHgyryPdkB__0OOX3WsRHH6n6P67Hzk4ngxxHIsY_nTD2JZB6gqOSrt-_BDd-1xHHtLRUFSSVjmtm_v7_rD5zNu8ypRM2PDpEmxl21viEdaLpQlNnHOdE8bdf00R-P3tU_I_Hs29mmvRvjz_TuO_jNPWnVcG7sxfKBM7dc-fap6pvlw2xp4MokIn52KX3q95TpQcUQ8warWxlevMlab-CK1pShjXJS2bX7-QcFnFEbCwBwWD1eoxD5idXv9FixAwU0YhEZ1mqZ6CNenwW5PPnIafF43VMJ9vssBb6AFUlQk3metWAW8Zbgg2FBrCxbMFFljDhEFF60-rAX-XG-B2lWd5HDgh0Euajeo-zrWtsW2EvV3-3cfOM9W-fhff6YveWg5LmT0evLto22AgCeciLDRUU9UxMzcNU7tltLrlf7cybnHVjxxu6m0e2XUpMuVg2BCdKbAIDeDkP1Im-xKXLLb8Wjz6Uc81y78N3AvBP9h99_CavD8hrjYwSTzz3ow8MAgLWhxEZ2dXFokRL67lgeN7WlkAVhc2YH9p-I36VVOCW6cacjV1dG7TOGFTWlp395c-ruU7Wfpp5VWtpfaP16MXAd6hXZa_W_I8e_7VxeNWjAjj_nXy9vOBx3L3O71vhw6fmy1rY--cMAoCqyM9JystPGT8gYl_XEgx4k4Bd5Gu4p6sb1QM8uXFg1I_5_jD2M2dSN7zjU_u1Z_zkli4lJP7my4-68uNxbSYfulrVqnbfirWtiQjgK9OobHkoVZXNZ40amAcpkohIBFfw96rqd-4Sm227S5GfvHYF1e3ofNE288NoO-M9H2z5ck8EnzIn2dsSebU8I4eJC84tU99XEP60b8G790HMLcjuWva4E1hyfMTgtO3VCzqObKUfutFVXrXtSf8-OPRVRxVilqoQdqTlNCze03Z1bnNZs_2a-a_Ov1MCiEG7gzy0U8is2XF6QNB419ilsLdne3G9M9EjXqHfeM0pG6i9GjYXdOM7uKKiKu7JiUp_VMc2b_jaur_CFZ-nn082zL7_Mzqx-uiaEe-HnFjpjWw4-nG017VzUsPeHXRcfxQ7Oy4pYt8cjN07TTyxZnN-N-_XMWcsHCciyMvP65w0vdZRaiuN_mDy_LbE-sOVpW8a2V0O4iD7hWiJcq4UrxPAF2MNCMv0PzI0iYw`
+$ nudox search advice
+~lanes exact✓2 names✓2 graph✓2 semantic✓2
+● owl-clean › server.py:169 › advice  ƒ function · py
+  <clean clone>::semantic::41d199f3f73fcff01d18a7a8dc0184cf8586962b9361de7a321b11f2020129a3::advice
+  def advice(campus: str, class_time: str, drive_min: int, day: str, reads: dict, buses: list, now: dt.datetime, prev: dict = None):
+  Transparent 'leave by' math. Every minute added is explained with its source.
+● owl-clean › server.py:277 › get_advice  ƒ function · py
+  <clean clone>::semantic::3c89e50bdc0ab0e44e981f07d8ed96de7bec8724726d3704ea118afd07115154::get_advice
+  def get_advice(campus: str = "Kennesaw", class_time: str = "09:30", drive_min: int = Query(25, ge=0, le=180), day: str = None, mode: str = "live", ts: str = None):
+
+$ nudox resolve advice
+~lanes exact✓2 names✓2 graph✓2 semantic✓2
+● owl-clean › server.py:169 › advice  ƒ function · py
+  <clean clone>::semantic::41d199f3f73fcff01d18a7a8dc0184cf8586962b9361de7a321b11f2020129a3::advice
+  def advice(campus: str, class_time: str, drive_min: int, day: str, reads: dict, buses: list, now: dt.datetime, prev: dict = None):
+  Transparent 'leave by' math. Every minute added is explained with its source.
+● owl-clean › server.py:277 › get_advice  ƒ function · py
+  <clean clone>::semantic::3c89e50bdc0ab0e44e981f07d8ed96de7bec8724726d3704ea118afd07115154::get_advice
+  def get_advice(campus: str = "Kennesaw", class_time: str = "09:30", drive_min: int = Query(25, ge=0, le=180), day: str = None, mode: str = "live", ts: str = None):
+
+$ nudox references <advice>
+
+$ nudox search bus
+~lanes exact✓1 names✓1 graph✓1 semantic✓1
+● owl-clean › server.py:151 › bus_summary  ƒ function · py
+  <clean clone>::semantic::161d3080610067cb81ee427149df76d8c9f546b02dcf0a7381f60222725c6109::bus_summary
+  def bus_summary(raw: dict) -> list:

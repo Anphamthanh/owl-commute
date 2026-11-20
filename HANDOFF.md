@@ -50,3 +50,14 @@
 - Never print or commit API keys. American English. No em dashes or double dashes anywhere.
 - No Co-Authored-By or "Generated with" lines in commit messages.
 - Ask An before anything public or hard to undo (creating the GitHub repo, uploading).
+
+## Friday 8:40 AM status
+- Pre-read done: 46 snapshots (6:15 to 8:10 AM), 595 model calls, 406 s. rush_summary.txt lists 48 flagged frames.
+- Spot check (pitch/spot-check.md): congestion slow vs not slow 20/20, exact 18/20; incident calls 0/8 verifiable in fog
+  or dark. Labeled by the assistant, so stated that way on slide 6. The Frey Rd "crash" 7:37 to 7:50 AM is unverifiable.
+- Deck rebuilt with Friday numbers: deck/Owl Commute.pptx (copy in ~/Downloads). Cost line measured on 595 reads.
+- Fallback video built: video/owl-commute-demo.mp4, 3:09, real screenshots, synthetic narration (macOS Samantha) from
+  video/make_video.py. Copy in ~/Downloads. If An records his own voice, drop per-scene .aiff files into video/clips and rerun.
+- Nudox: account, key, index, README section, session log all done Thu night. Screenshot in ~/Downloads.
+- Still needed from An: upload deck to Google Drive (Anyone with the link: Editor), upload video (Anyone with the link: view),
+  fill the form. Hard lock 10:00 AM.
